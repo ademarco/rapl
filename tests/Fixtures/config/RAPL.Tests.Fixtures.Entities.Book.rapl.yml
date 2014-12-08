@@ -1,0 +1,23 @@
+RAPL\Tests\Fixtures\Entities\Book:
+    format: json
+
+    routes:
+        resource: books/{id}
+        collection: books
+
+    envelopes:
+        - results
+
+    identifiers:
+        id:
+            type: integer
+
+    fields:
+        title:
+            type: string
+
+        isbn: ~
+
+    embedOne:
+        author:
+            targetEntity: RAPL\Tests\Fixtures\Entities\Author

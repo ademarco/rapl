@@ -1,0 +1,6 @@
+### .scrutinizer.yml
+
+# imports default php config
+# see https://github.com/scrutinizer-ci/scrutinizer/blob/master/res/default-configs/php.yml
+imports:
+    - php
