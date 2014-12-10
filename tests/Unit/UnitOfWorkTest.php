@@ -2,9 +2,11 @@
 
 namespace RAPL\Tests\Unit;
 
+use Doctrine\Common\Persistence\Mapping\RuntimeReflectionService;
 use Mockery\MockInterface;
 use RAPL\RAPL\Connection\Connection;
 use RAPL\RAPL\EntityManager;
+use RAPL\RAPL\Mapping\ClassMetadata;
 use RAPL\RAPL\UnitOfWork;
 use RAPL\Tests\Fixtures\Entities\Author;
 
@@ -61,7 +63,7 @@ class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $this->manager->shouldReceive('getClassMetadata')->andReturn($classMetadata);
 
         $data = array(
-            'id' => 123,
+            'id'   => 123,
             'name' => 'Foo Bar'
         );
 
@@ -76,5 +78,39 @@ class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->unitOfWork->removeFromIdentityMap($entityA));
         $this->assertFalse($this->unitOfWork->isInIdentityMap($entityA));
         $this->assertFalse($this->unitOfWork->removeFromIdentityMap($entityA));
+    }
+
+    public function testCreateEntity()
+    {
+        $className = 'RAPL\Tests\Fixtures\Entities\Author';
+
+        $classMetadata = new ClassMetadata($className);
+        $classMetadata->mapField(
+            array(
+                'fieldName' => 'name'
+            )
+        );
+
+        $reflService = new RuntimeReflectionService();
+
+        $classMetadata->initializeReflection($reflService);
+        $classMetadata->wakeupReflection($reflService);
+
+        $this->manager->shouldReceive('getClassMetadata')->andReturn($classMetadata);
+
+        $data = array(
+            'id'   => 123,
+            'name' => 'Foo Bar'
+        );
+
+        /** @var Author $actual */
+        $actual = $this->unitOfWork->createEntity($className, $data);
+
+        $this->assertInstanceOf($className, $actual);
+        $this->assertSame('Foo Bar', $actual->getName());
+
+        $copy = $this->unitOfWork->createEntity($className, $data);
+
+        $this->assertSame($actual, $copy);
     }
 }
