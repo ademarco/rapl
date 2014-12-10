@@ -25,6 +25,8 @@ interface ConnectionInterface
 
     /**
      * @param EventSubscriberInterface $subscriber
+     *
+     * @return void
      */
     public function addSubscriber(EventSubscriberInterface $subscriber);
 }

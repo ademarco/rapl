@@ -2,7 +2,6 @@
 
 namespace RAPL\RAPL;
 
-use Doctrine\Common\EventManager;
 use RAPL\RAPL\Connection\ConnectionInterface;
 use RAPL\RAPL\Mapping\ClassMetadataFactory;
 

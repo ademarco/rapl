@@ -14,7 +14,7 @@ class Configuration
     private $entityNamespaces = array();
 
     /**
-     * @var MappingDriver
+     * @var MappingDriver|null
      */
     private $mappingDriver;
 

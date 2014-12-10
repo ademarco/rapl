@@ -44,7 +44,7 @@ class Serializer
      *
      * Decodes the serialized data, and then hydrates the entities.
      *
-     * @param $data
+     * @param string $data
      *
      * @return array
      */

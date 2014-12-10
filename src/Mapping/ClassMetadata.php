@@ -165,7 +165,7 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return boolean
      */
@@ -190,7 +190,7 @@ class ClassMetadata implements ClassMetadataInterface
      * Checks whether the class has a mapped embedded document for the specified field
      * and if yes, checks whether it is a single-valued association (to-one).
      *
-     * @param $fieldName
+     * @param string $fieldName
      *
      * @return bool
      */
