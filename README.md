@@ -18,8 +18,42 @@ It implements the same interfaces, but allows you to store and retrieve entities
 
 ## Installation
 
-You need [Composer](https://getcomposer.org/) in order to install RAPL:
+RAPL can be installed using [Composer](https://getcomposer.org/):
 
 ```bash
 composer require rapl/rapl
 ```
+
+This will add RAPL to the dependency list of your main project's composer.json.
+
+## Setting up
+
+```php
+<?php
+
+require_once 'vendor/autoload.php';
+
+$connection = new \RAPL\RAPL\Connection\Connection('http://example.com/api/');
+$connection->addSubscriber(new \Your\Authentication\Subscriber());
+
+$configuration = new \RAPL\RAPL\Configuration();
+$paths         = array(__DIR__ . '/config');
+$driver        = new \RAPL\RAPL\Mapping\Driver\YamlDriver($paths, '.rapl.yml');
+$configuration->setMetadataDriver($driver);
+
+$manager = new \RAPL\RAPL\EntityManager($connection, $configuration);
+```
+
+## Usage
+
+Once you have set everything up correctly, you can start using RAPL. This will feel very familiar if you have worked
+with Doctrine before.
+
+```php
+$repository = $manager->getRepository('Your\Entity\Class');
+
+// Get entity with id 3
+$entity = $repository->find(3);
+
+// Or get all of them
+$entities = $repository->findAll();
