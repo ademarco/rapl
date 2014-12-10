@@ -46,6 +46,24 @@ class UnitOfWork
     private $persisters = array();
 
     /**
+     * The identity map that holds references to all managed entities that have
+     * an identity. The entities are grouped by their class name.
+     * Since all classes in a hierarchy must share the same identifier set,
+     * we always take the root class name of the hierarchy.
+     *
+     * @var array
+     */
+    private $identityMap = array();
+
+    /**
+     * Map of all identifiers of managed entities.
+     * Keys are object ids (spl_object_hash).
+     *
+     * @var array
+     */
+    private $entityIdentifiers = array();
+
+    /**
      * @param ObjectManager $manager
      */
     public function __construct(ObjectManager $manager)
@@ -152,6 +170,74 @@ class UnitOfWork
     }
 
     /**
+     * Checks wether the entity is in the identity map
+     *
+     * @param $entity
+     *
+     * @return bool
+     */
+    public function isInIdentityMap($entity)
+    {
+        $oid = spl_object_hash($entity);
+
+        if (!isset($this->entityIdentifiers[$oid])) {
+            return false;
+        }
+
+        $classMetadata = $this->manager->getClassMetadata(get_class($entity));
+        $idHash        = implode(' ', $this->entityIdentifiers[$oid]);
+
+        return isset($this->identityMap[$classMetadata->getName()][$idHash]);
+    }
+
+    /**
+     * Adds this entity to the identity map
+     *
+     * @param object $entity
+     *
+     * @return bool
+     */
+    public function addToIdentityMap($entity)
+    {
+        $classMetadata = $this->manager->getClassMetadata(get_class($entity));
+        $idHash        = implode(' ', $this->entityIdentifiers[spl_object_hash($entity)]);
+
+        $className = $classMetadata->getName();
+
+        if (isset($this->identityMap[$className][$idHash])) {
+            return false;
+        }
+
+        $this->identityMap[$className][$idHash] = $entity;
+
+        return true;
+    }
+
+    /**
+     * Removes the entity from the identity map
+     *
+     * @param $entity
+     *
+     * @return bool
+     */
+    public function removeFromIdentityMap($entity)
+    {
+        $oid = spl_object_hash($entity);
+        $classMetadata = $this->manager->getClassMetadata(get_class($entity));
+        $idHash = implode(' ', $this->entityIdentifiers[$oid]);
+
+        $className = $classMetadata->getName();
+
+        if (isset($this->identityMap[$className][$idHash])) {
+            unset($this->identityMap[$className][$idHash]);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Creates an entity and fills it with the provided data
      *
      * @param string $className
@@ -164,7 +250,19 @@ class UnitOfWork
         /** @var ClassMetadata $classMetadata */
         $classMetadata = $this->manager->getClassMetadata($className);
 
-        $entity = $this->newInstance($classMetadata);
+        $idHash = $data['id'];
+        $id = array('id' => $data['id']);
+
+        if (isset($this->identityMap[$className][$idHash])) {
+            $entity = $this->identityMap[$className][$idHash];
+        } else {
+            $entity = $this->newInstance($classMetadata);
+            $oid    = spl_object_hash($entity);
+
+            $this->entityIdentifiers[$oid] = $id;
+
+            $this->addToIdentityMap($entity);
+        }
 
         foreach ($data as $field => $value) {
             if ($classMetadata->hasField($field)) {
@@ -207,16 +305,6 @@ class UnitOfWork
      * @return boolean
      */
     public function isScheduledForInsert($object)
-    {
-        // TODO implement
-    }
-
-    /**
-     * @param object $object
-     *
-     * @return boolean
-     */
-    public function isInIdentityMap($object)
     {
         // TODO implement
     }
