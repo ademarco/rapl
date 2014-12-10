@@ -41,7 +41,7 @@ class Connection implements ConnectionInterface
      */
     public function sendRequest(RequestInterface $request)
     {
-        return $response = $request->send();
+        return $request->send();
     }
 
     /**
