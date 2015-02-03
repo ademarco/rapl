@@ -23,7 +23,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $classMetadata = \Mockery::mock('RAPL\RAPL\Mapping\ClassMetadata');
         $classMetadata->shouldReceive('getName')->andReturn($entityName);
         $classMetadata->shouldReceive('getFormat')->andReturn('json');
-        $classMetadata->shouldReceive('getEnvelopes')->andReturn(array());
+        $classMetadata->shouldReceive('getEnvelopes')->andReturn(array('results'));
 
         $classMetadata->shouldReceive('hasField')->andReturn('true');
 
@@ -82,7 +82,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
 
         $serializer = new Serializer($manager, $classMetadata);
 
-        $data = '[{
+        $data = '{"results":[{
             "string": "Foo Bar",
             "integer": 5,
             "boolean": false,
@@ -91,7 +91,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
                 "foo": "Bar"
             },
             "unknown": "adsf"
-        }]';
+        }]}';
 
 
         $actual = $serializer->deserialize($data);

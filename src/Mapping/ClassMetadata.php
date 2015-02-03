@@ -522,15 +522,16 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
+     * @param $type
      * @return array
      */
     public function getEnvelopes($type)
     {
         if ($this->hasEnvelope($type)) {
-            return $this->envelopes[$type];
+            return is_array($this->envelopes[$type]) ? $this->envelopes[$type] : array($this->envelopes[$type]);
         }
 
-        return null;
+        return array();
     }
 
     /**

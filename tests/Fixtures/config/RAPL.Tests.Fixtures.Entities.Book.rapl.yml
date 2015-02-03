@@ -8,8 +8,8 @@ RAPL\Tests\Fixtures\Entities\Book:
     envelopes:
         resource:
             - results
-        collection:
-            - results
+            - 0
+        collection: results
 
     identifiers:
         id:

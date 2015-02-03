@@ -53,6 +53,7 @@ class Serializer
     {
         $data     = $this->decode($data);
         $elements = $this->unwrap($data, $type);
+        $elements = ($type == 'collection') ? $elements : array($elements);
 
         $entities = array();
 
@@ -166,9 +167,10 @@ class Serializer
         $containers = $this->classMetadata->getEnvelopes($type);
 
         foreach ($containers as $container) {
-            $data = $data[$container];
+            if (isset($data[$container])) {
+                $data = $data[$container];
+            }
         }
-
         return $data;
     }
 }
