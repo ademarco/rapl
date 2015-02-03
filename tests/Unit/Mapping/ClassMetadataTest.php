@@ -279,13 +279,15 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
     {
         $metadata = $this->getClassMetadata();
 
-        $envelopes = array('foo', 'bar');
+        $envelopes = array(
+          'resource' => array('foo'),
+          'collection' => array('bar'),
+        );
 
         $metadata->setEnvelopes($envelopes);
 
-        $actual = $metadata->getEnvelopes();
-
-        $this->assertSame($envelopes, $actual);
+        $this->assertSame($envelopes['resource'], $metadata->getEnvelopes('resource'));
+        $this->assertSame($envelopes['collection'], $metadata->getEnvelopes('collection'));
     }
 
     public function testSetFieldValue()
