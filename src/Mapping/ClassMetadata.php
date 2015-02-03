@@ -524,9 +524,13 @@ class ClassMetadata implements ClassMetadataInterface
     /**
      * @return array
      */
-    public function getEnvelopes()
+    public function getEnvelopes($type)
     {
-        return $this->envelopes;
+        if ($this->hasEnvelope($type)) {
+            return $this->envelopes[$type];
+        }
+
+        return null;
     }
 
     /**
@@ -534,7 +538,22 @@ class ClassMetadata implements ClassMetadataInterface
      */
     public function setEnvelopes(array $envelopes)
     {
-        $this->envelopes = $envelopes;
+        if (isset($envelopes['resource'])) {
+            $this->envelopes['resource'] = $envelopes['resource'];
+        }
+        if (isset($envelopes['collection'])) {
+            $this->envelopes['collection'] = $envelopes['collection'];
+        }
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function hasEnvelope($type)
+    {
+        return isset($this->envelopes[$type]);
     }
 
     /**

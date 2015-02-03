@@ -56,10 +56,11 @@ class BasicEntityPersister implements EntityPersister
      *
      * @param array       $criteria The criteria by which to load the entity.
      * @param object|null $entity   The entity to load the data into. If not specified, a new entity is created.
+     * @param string      $type     Entity type, either 'resource' or 'collection'
      *
      * @return object|null The loaded and managed entity instance or NULL if the entity can not be found.
      */
-    public function load(array $criteria, $entity = null)
+    public function load(array $criteria, $entity = null, $type = 'collection')
     {
         $uri     = $this->getUri($criteria);
         $request = $this->connection->createRequest('GET', $uri);
@@ -74,7 +75,7 @@ class BasicEntityPersister implements EntityPersister
             }
         }
 
-        $entities = $this->serializer->deserialize($response->getBody(true));
+        $entities = $this->serializer->deserialize($response->getBody(true), $type);
 
         return $entities ? $entities[0] : null;
     }
@@ -89,7 +90,7 @@ class BasicEntityPersister implements EntityPersister
      */
     public function loadById(array $identifier, $entity = null)
     {
-        return $this->load($identifier, $entity);
+        return $this->load($identifier, $entity, 'resource');
     }
 
     /**
@@ -122,4 +123,5 @@ class BasicEntityPersister implements EntityPersister
     {
         return $this->uriBuilder->createUri($criteria);
     }
+
 }
