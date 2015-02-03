@@ -6,7 +6,10 @@ RAPL\Tests\Fixtures\Entities\Book:
         collection: books
 
     envelopes:
-        - results
+        resource:
+            - results
+        collection:
+            - results
 
     identifiers:
         id:
