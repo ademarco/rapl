@@ -342,7 +342,7 @@ class ClassMetadata implements ClassMetadataInterface
      *
      * @param string $assocName
      *
-     * @return boolean
+     * @return boolean|null
      */
     public function isAssociationInverseSide($assocName)
     {
@@ -485,7 +485,7 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
-     * @param $type
+     * @param string $type
      * @param array $element
      */
     public function setRoute($type, array $element)
@@ -520,7 +520,7 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
-     * @param $type
+     * @param string $type
      * @return array
      */
     public function getEnvelopes($type)
@@ -533,7 +533,7 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
-     * @param $type
+     * @param string $type
      * @param array $element
      */
     public function setEnvelopes($type, array $element)
