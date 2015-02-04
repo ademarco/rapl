@@ -485,15 +485,13 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
-     * @param array $routes
+     * @param $type
+     * @param array $element
      */
-    public function setRoutes(array $routes)
+    public function setRoute($type, array $element)
     {
-        if (isset($routes['resource'])) {
-            $this->routes['resource'] = $routes['resource'];
-        }
-        if (isset($routes['collection'])) {
-            $this->routes['collection'] = $routes['collection'];
+        if (isset($element['route'])) {
+            $this->routes[$type] = $element['route'];
         }
     }
 
@@ -528,22 +526,20 @@ class ClassMetadata implements ClassMetadataInterface
     public function getEnvelopes($type)
     {
         if ($this->hasEnvelope($type)) {
-            return is_array($this->envelopes[$type]) ? $this->envelopes[$type] : array($this->envelopes[$type]);
+            return $this->envelopes[$type];
         }
 
         return array();
     }
 
     /**
-     * @param array $envelopes
+     * @param $type
+     * @param array $element
      */
-    public function setEnvelopes(array $envelopes)
+    public function setEnvelopes($type, array $element)
     {
-        if (isset($envelopes['resource'])) {
-            $this->envelopes['resource'] = $envelopes['resource'];
-        }
-        if (isset($envelopes['collection'])) {
-            $this->envelopes['collection'] = $envelopes['collection'];
+        if (isset($element['envelopes'])) {
+            $this->envelopes[$type] = $element['envelopes'];
         }
     }
 

@@ -3,6 +3,7 @@
 namespace RAPL\Tests\Unit\Mapping\Driver;
 
 use RAPL\RAPL\Mapping\Driver\YamlDriver;
+use Symfony\Component\Yaml\Yaml;
 
 class YamlDriverTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,8 +16,23 @@ class YamlDriverTest extends \PHPUnit_Framework_TestCase
 
         $metadata = \Mockery::mock('RAPL\RAPL\Mapping\ClassMetadata');
         $metadata->shouldReceive('setFormat')->withArgs(array('json'))->once();
-        $metadata->shouldReceive('setRoutes')->withArgs(array(array('resource' => 'books/{id}', 'collection' => 'books')))->once();
-        $metadata->shouldReceive('setEnvelopes')->withArgs(array(array('resource' => array('results', 0), 'collection' => 'results')))->once();
+
+        $element = array(
+            'resource' => array(
+                'route' => 'books/{id}',
+                'envelopes' => array('results', 0),
+            ),
+            'collection' => array(
+                'route' => 'books',
+                'envelopes' => array('results'),
+            ),
+        );
+        $metadata->shouldReceive('setRoute')->withArgs(array('resource', $element['resource']))->once();
+        $metadata->shouldReceive('setEnvelopes')->withArgs(array('resource', $element['resource']))->once();
+
+        $metadata->shouldReceive('setRoute')->withArgs(array('collection', $element['collection']))->once();
+        $metadata->shouldReceive('setEnvelopes')->withArgs(array('collection', $element['collection']))->once();
+
 
         $metadata->shouldReceive('mapField')->withArgs(
             array(

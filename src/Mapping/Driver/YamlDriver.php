@@ -37,12 +37,14 @@ class YamlDriver extends FileDriver
             $metadata->setFormat($element['format']);
         }
 
-        if (isset($element['envelopes'])) {
-            $metadata->setEnvelopes($element['envelopes']);
+        if (isset($element['resource'])) {
+            $metadata->setRoute('resource', $element['resource']);
+            $metadata->setEnvelopes('resource', $element['resource']);
         }
 
-        if (isset($element['routes'])) {
-            $metadata->setRoutes($element['routes']);
+        if (isset($element['collection'])) {
+            $metadata->setRoute('collection', $element['collection']);
+            $metadata->setEnvelopes('collection', $element['collection']);
         }
 
         if (isset($element['identifiers'])) {
