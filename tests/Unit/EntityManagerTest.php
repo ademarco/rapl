@@ -2,7 +2,6 @@
 
 namespace RAPL\Tests\Unit;
 
-use Doctrine\Common\EventManager;
 use RAPL\RAPL\Configuration;
 use RAPL\RAPL\Connection\Connection;
 use RAPL\RAPL\EntityManager;
