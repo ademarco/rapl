@@ -45,13 +45,15 @@ class Serializer
      * Decodes the serialized data, and then hydrates the entities.
      *
      * @param string $data
+     * @param string $type Entity type, either 'resource' or 'collection'
      *
      * @return array
      */
-    public function deserialize($data)
+    public function deserialize($data, $type = 'collection')
     {
         $data     = $this->decode($data);
-        $elements = $this->unwrap($data);
+        $elements = $this->unwrap($data, $type);
+        $elements = ($type == 'collection') ? $elements : array($elements);
 
         $entities = array();
 
@@ -156,17 +158,19 @@ class Serializer
      * Unwraps the data from containers
      *
      * @param array $data
+     * @param string $type Entity type, either 'resource' or 'collection'
      *
      * @return array
      */
-    private function unwrap(array $data)
+    private function unwrap(array $data, $type = 'collection')
     {
-        $containers = $this->classMetadata->getEnvelopes();
+        $containers = $this->classMetadata->getEnvelopes($type);
 
         foreach ($containers as $container) {
-            $data = $data[$container];
+            if (isset($data[$container])) {
+                $data = $data[$container];
+            }
         }
-
         return $data;
     }
 }

@@ -260,32 +260,48 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($metadata->getRoute('resource'));
 
-        $routes = array(
-            'resource'   => 'foo/{id}.xml',
-            'collection' => 'foos.xml'
+        $element = array(
+          'resource' => array(
+            'route' => 'books/{id}',
+            'envelopes' => array('results', 0),
+          ),
+          'collection' => array(
+            'route' => 'books',
+            'envelopes' => array('results'),
+          ),
         );
 
-        $metadata->setRoutes($routes);
+        $metadata->setRoute('resource', $element['resource']);
+        $metadata->setRoute('collection', $element['collection']);
 
         $this->assertTrue($metadata->hasRoute('resource'));
         $this->assertTrue($metadata->hasRoute('collection'));
 
         $actual = $metadata->getRoute('collection');
 
-        $this->assertSame('foos.xml', $actual);
+        $this->assertSame('books', $actual);
     }
 
     public function testSetGetEnvelopes()
     {
         $metadata = $this->getClassMetadata();
 
-        $envelopes = array('foo', 'bar');
+        $element = array(
+          'resource' => array(
+            'route' => 'books/{id}',
+            'envelopes' => array('results', 0),
+          ),
+          'collection' => array(
+            'route' => 'books',
+            'envelopes' => array('results'),
+          ),
+        );
 
-        $metadata->setEnvelopes($envelopes);
+        $metadata->setEnvelopes('resource', $element['resource']);
+        $metadata->setEnvelopes('collection', $element['collection']);
 
-        $actual = $metadata->getEnvelopes();
-
-        $this->assertSame($envelopes, $actual);
+        $this->assertSame($element['resource']['envelopes'], $metadata->getEnvelopes('resource'));
+        $this->assertSame($element['collection']['envelopes'], $metadata->getEnvelopes('collection'));
     }
 
     public function testSetFieldValue()

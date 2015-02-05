@@ -342,7 +342,7 @@ class ClassMetadata implements ClassMetadataInterface
      *
      * @param string $assocName
      *
-     * @return boolean
+     * @return boolean|null
      */
     public function isAssociationInverseSide($assocName)
     {
@@ -485,15 +485,13 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
-     * @param array $routes
+     * @param string $type
+     * @param array $element
      */
-    public function setRoutes(array $routes)
+    public function setRoute($type, array $element)
     {
-        if (isset($routes['resource'])) {
-            $this->routes['resource'] = $routes['resource'];
-        }
-        if (isset($routes['collection'])) {
-            $this->routes['collection'] = $routes['collection'];
+        if (isset($element['route'])) {
+            $this->routes[$type] = $element['route'];
         }
     }
 
@@ -522,19 +520,37 @@ class ClassMetadata implements ClassMetadataInterface
     }
 
     /**
+     * @param string $type
      * @return array
      */
-    public function getEnvelopes()
+    public function getEnvelopes($type)
     {
-        return $this->envelopes;
+        if ($this->hasEnvelope($type)) {
+            return $this->envelopes[$type];
+        }
+
+        return array();
     }
 
     /**
-     * @param array $envelopes
+     * @param string $type
+     * @param array $element
      */
-    public function setEnvelopes(array $envelopes)
+    public function setEnvelopes($type, array $element)
     {
-        $this->envelopes = $envelopes;
+        if (isset($element['envelopes'])) {
+            $this->envelopes[$type] = $element['envelopes'];
+        }
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function hasEnvelope($type)
+    {
+        return isset($this->envelopes[$type]);
     }
 
     /**

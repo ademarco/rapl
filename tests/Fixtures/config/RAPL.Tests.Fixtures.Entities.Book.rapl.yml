@@ -1,12 +1,15 @@
 RAPL\Tests\Fixtures\Entities\Book:
     format: json
 
-    routes:
-        resource: books/{id}
-        collection: books
-
-    envelopes:
-        - results
+    resource:
+        route: books/{id}
+        envelopes:
+            - results
+            - 0
+    collection:
+        route: books
+        envelopes:
+            - results
 
     identifiers:
         id:
