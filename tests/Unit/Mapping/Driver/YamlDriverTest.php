@@ -3,7 +3,6 @@
 namespace RAPL\Tests\Unit\Mapping\Driver;
 
 use RAPL\RAPL\Mapping\Driver\YamlDriver;
-use Symfony\Component\Yaml\Yaml;
 
 class YamlDriverTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,12 +17,12 @@ class YamlDriverTest extends \PHPUnit_Framework_TestCase
         $metadata->shouldReceive('setFormat')->withArgs(array('json'))->once();
 
         $element = array(
-            'resource' => array(
-                'route' => 'books/{id}',
+            'resource'   => array(
+                'route'     => 'books/{id}',
                 'envelopes' => array('results', 0),
             ),
             'collection' => array(
-                'route' => 'books',
+                'route'     => 'books',
                 'envelopes' => array('results'),
             ),
         );
@@ -32,7 +31,6 @@ class YamlDriverTest extends \PHPUnit_Framework_TestCase
 
         $metadata->shouldReceive('setRoute')->withArgs(array('collection', $element['collection']))->once();
         $metadata->shouldReceive('setEnvelopes')->withArgs(array('collection', $element['collection']))->once();
-
 
         $metadata->shouldReceive('mapField')->withArgs(
             array(

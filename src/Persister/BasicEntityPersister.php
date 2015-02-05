@@ -123,5 +123,4 @@ class BasicEntityPersister implements EntityPersister
     {
         return $this->uriBuilder->createUri($criteria);
     }
-
 }

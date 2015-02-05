@@ -190,7 +190,7 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
         $fieldName = 'author';
 
         $mapping = array(
-            'fieldName' => $fieldName,
+            'fieldName'    => $fieldName,
             'targetEntity' => 'RAPL\Tests\Fixtures\Entities\Author'
         );
 
@@ -261,14 +261,14 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($metadata->getRoute('resource'));
 
         $element = array(
-          'resource' => array(
-            'route' => 'books/{id}',
-            'envelopes' => array('results', 0),
-          ),
-          'collection' => array(
-            'route' => 'books',
-            'envelopes' => array('results'),
-          ),
+            'resource'   => array(
+                'route'     => 'books/{id}',
+                'envelopes' => array('results', 0),
+            ),
+            'collection' => array(
+                'route'     => 'books',
+                'envelopes' => array('results'),
+            ),
         );
 
         $metadata->setRoute('resource', $element['resource']);
@@ -287,14 +287,14 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
         $metadata = $this->getClassMetadata();
 
         $element = array(
-          'resource' => array(
-            'route' => 'books/{id}',
-            'envelopes' => array('results', 0),
-          ),
-          'collection' => array(
-            'route' => 'books',
-            'envelopes' => array('results'),
-          ),
+            'resource'   => array(
+                'route'     => 'books/{id}',
+                'envelopes' => array('results', 0),
+            ),
+            'collection' => array(
+                'route'     => 'books',
+                'envelopes' => array('results'),
+            ),
         );
 
         $metadata->setEnvelopes('resource', $element['resource']);

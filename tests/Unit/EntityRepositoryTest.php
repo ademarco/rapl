@@ -11,7 +11,7 @@ class EntityRepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $object = new Book();
 
-        $persister  = \Mockery::mock('RAPL\RAPL\Persister\EntityPersister');
+        $persister = \Mockery::mock('RAPL\RAPL\Persister\EntityPersister');
         $persister->shouldReceive('loadById')->withArgs(array(array('id' => 3)))->andReturn($object);
 
         $metadata   = \Mockery::mock('RAPL\RAPL\Mapping\ClassMetadata');

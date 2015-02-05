@@ -486,7 +486,7 @@ class ClassMetadata implements ClassMetadataInterface
 
     /**
      * @param string $type
-     * @param array $element
+     * @param array  $element
      */
     public function setRoute($type, array $element)
     {
@@ -521,6 +521,7 @@ class ClassMetadata implements ClassMetadataInterface
 
     /**
      * @param string $type
+     *
      * @return array
      */
     public function getEnvelopes($type)
@@ -534,7 +535,7 @@ class ClassMetadata implements ClassMetadataInterface
 
     /**
      * @param string $type
-     * @param array $element
+     * @param array  $element
      */
     public function setEnvelopes($type, array $element)
     {

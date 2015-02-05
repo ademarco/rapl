@@ -93,7 +93,6 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             "unknown": "adsf"
         }]}';
 
-
         $actual = $serializer->deserialize($data);
         $this->assertSame(1, count($actual));
         $this->assertSame($entity, $actual[0]);

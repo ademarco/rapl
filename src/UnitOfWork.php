@@ -222,9 +222,9 @@ class UnitOfWork
      */
     public function removeFromIdentityMap($entity)
     {
-        $oid = spl_object_hash($entity);
+        $oid           = spl_object_hash($entity);
         $classMetadata = $this->manager->getClassMetadata(get_class($entity));
-        $idHash = implode(' ', $this->entityIdentifiers[$oid]);
+        $idHash        = implode(' ', $this->entityIdentifiers[$oid]);
 
         $className = $classMetadata->getName();
 
@@ -251,7 +251,7 @@ class UnitOfWork
         $classMetadata = $this->manager->getClassMetadata($className);
 
         $idHash = $data['id'];
-        $id = array('id' => $data['id']);
+        $id     = array('id' => $data['id']);
 
         if (isset($this->identityMap[$className][$idHash])) {
             $entity = $this->identityMap[$className][$idHash];

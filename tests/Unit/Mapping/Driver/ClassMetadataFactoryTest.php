@@ -20,7 +20,8 @@ class ClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
 
         /** @var MockInterface $config */
         $config = $entityManager->getConfiguration();
-        $config->shouldReceive('getEntityNamespace')->withArgs(array('Foo'))->andReturn('RAPL\Tests\Fixtures\Entities')->once();
+        $config->shouldReceive('getEntityNamespace')->withArgs(array('Foo'))->andReturn('RAPL\Tests\Fixtures\Entities')
+            ->once();
 
         $classMetadataFactory = new ClassMetadataFactory();
         $classMetadataFactory->setEntityManager($entityManager);

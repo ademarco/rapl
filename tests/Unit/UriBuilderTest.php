@@ -13,7 +13,7 @@ class UriBuilderTest extends \PHPUnit_Framework_TestCase
         $classMetadata->shouldReceive('getRoute')->withArgs(array('resource'))->andReturn('books/{id}.json')->once();
         $classMetadata->shouldReceive('getRoute')->withArgs(array('collection'))->andReturn('books.json')->once();
 
-        $uriBuilder    = new UriBuilder($classMetadata);
+        $uriBuilder = new UriBuilder($classMetadata);
 
         $criteria = array(
             'id' => 4

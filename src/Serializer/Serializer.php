@@ -157,7 +157,7 @@ class Serializer
     /**
      * Unwraps the data from containers
      *
-     * @param array $data
+     * @param array  $data
      * @param string $type Entity type, either 'resource' or 'collection'
      *
      * @return array
@@ -171,6 +171,7 @@ class Serializer
                 $data = $data[$container];
             }
         }
+
         return $data;
     }
 }

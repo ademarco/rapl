@@ -44,7 +44,7 @@ class MappingException extends \Exception implements RAPLException
      * because there might be long classnames that will be shortened
      * within the stacktrace.
      *
-     * @param string $entity The entity's name
+     * @param string               $entity The entity's name
      * @param \ReflectionException $exception
      *
      * @return MappingException

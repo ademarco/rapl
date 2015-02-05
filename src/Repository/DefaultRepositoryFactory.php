@@ -44,6 +44,9 @@ class DefaultRepositoryFactory implements RepositoryFactory
     {
         $classMetadata = $manager->getClassMetadata($entityName);
 
-        return new EntityRepository($manager->getUnitOfWork()->getEntityPersister($classMetadata->getName()), $classMetadata);
+        return new EntityRepository(
+            $manager->getUnitOfWork()->getEntityPersister($classMetadata->getName()),
+            $classMetadata
+        );
     }
 }
